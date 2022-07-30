@@ -1,0 +1,5 @@
+{
+    "name" : "ModFirmwareBase",
+    "version" : "0.0.1",
+    "description" : "The basic components of a modular firmware"
+}
