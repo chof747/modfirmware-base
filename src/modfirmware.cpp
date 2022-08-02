@@ -2,7 +2,9 @@
 #include "component.h"
 #include "controller.h"
 
-ModFirmWareManager::ModFirmWareManager(uint8_t numcomponents) : numcomponents(numcomponents)
+using namespace ModFirmWare;
+
+Application::Application(uint8_t numcomponents) : numcomponents(numcomponents)
 //****************************************************************************************
 {
     components = new Component *[numcomponents];
@@ -12,13 +14,13 @@ ModFirmWareManager::ModFirmWareManager(uint8_t numcomponents) : numcomponents(nu
     }
 }
 
-ModFirmWareManager::~ModFirmWareManager()
+Application::~Application()
 //****************************************************************************************
 {
     delete components;
 }
 
-uint8_t ModFirmWareManager::addComponent(Component *component)
+uint8_t Application::addComponent(Component *component)
 //****************************************************************************************
 {
     for (int i = 0; i < numcomponents; ++i)
@@ -33,10 +35,10 @@ uint8_t ModFirmWareManager::addComponent(Component *component)
     return numcomponents + 1;
 }
 
-bool ModFirmWareManager::registerController(Controller *controller, Controller *next, Controller *alternateNext)
+bool Application::registerController(Controller *controller, Controller *next, Controller *alternateNext)
 //****************************************************************************************
 {
-    activation_cb_t cb = std::bind(&ModFirmWareManager::onActivateController,
+    activation_cb_t cb = std::bind(&Application::onActivateController,
                                    this,
                                    std::placeholders::_1);
 
@@ -47,7 +49,7 @@ bool ModFirmWareManager::registerController(Controller *controller, Controller *
     return true;
 }
 
-void ModFirmWareManager::setup()
+void Application::setup()
 //****************************************************************************************
 {
     for (int i = 0; i < numcomponents; ++i)
@@ -56,7 +58,7 @@ void ModFirmWareManager::setup()
     }
 }
 
-void ModFirmWareManager::loop()
+void Application::loop()
 //****************************************************************************************
 {
     for (int i = 0; i < numcomponents; ++i)
@@ -65,7 +67,7 @@ void ModFirmWareManager::loop()
     }
 }
 
-void ModFirmWareManager::onActivateController(Controller* active)
+void Application::onActivateController(Controller* active)
 //****************************************************************************************
 {
     activeController = active;

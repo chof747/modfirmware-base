@@ -1,5 +1,7 @@
 #include "controller.h"
 
+using namespace ModFirmWare;
+
 Controller::Controller(): 
   next(NULL), alternateNext(NULL) {}
 

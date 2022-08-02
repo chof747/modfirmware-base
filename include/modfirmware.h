@@ -3,27 +3,30 @@
 
 #include <Arduino.h>
 
-class Controller;
-class Component;
-
-class ModFirmWareManager
+namespace ModFirmWare
 {
-public:
-    ModFirmWareManager(uint8_t numcomponents);
-    ~ModFirmWareManager();
 
-    uint8_t addComponent(Component* component);
-    bool registerController(Controller* controller, Controller* next = NULL, Controller* alternateNext = NULL);
+    class Controller;
+    class Component;
 
-    void setup();
-    void loop();
+    class Application
+    {
+    public:
+        Application(uint8_t numcomponents);
+        ~Application();
 
-private:
-    uint8_t numcomponents;
-    Component **components;
-    Controller* activeController;
+        uint8_t addComponent(Component *component);
+        bool registerController(Controller *controller, Controller *next = NULL, Controller *alternateNext = NULL);
 
-    void onActivateController(Controller* active);
+        void setup();
+        void loop();
+
+    private:
+        uint8_t numcomponents;
+        Component **components;
+        Controller *activeController;
+
+        void onActivateController(Controller *active);
+    };
 };
-
 #endif // MODFIRMWARE_HH

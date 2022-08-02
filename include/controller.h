@@ -3,31 +3,34 @@
 
 #include <Arduino.h>
 
-class Controller;
-typedef std::function<void(Controller*)> activation_cb_t;
-
-class Controller
+namespace ModFirmWare
 {
-public:
-    Controller();
+    class Controller;
+    typedef std::function<void(Controller *)> activation_cb_t;
 
-    virtual void activate() = 0;
-    virtual void loop() = 0;
-    virtual void deactivate() {}
+    class Controller
+    {
+    public:
+        Controller();
 
-    void setActivationCallback(activation_cb_t cb);
-    void setNext(Controller *c);
-    void setAlternateNext(Controller *c);
+        virtual void activate() = 0;
+        virtual void loop() = 0;
+        virtual void deactivate() {}
 
-protected:
-    void gotoNext();
-    void gotoAlternateNext();
-    void gotoController(Controller *controller);
+        void setActivationCallback(activation_cb_t cb);
+        void setNext(Controller *c);
+        void setAlternateNext(Controller *c);
 
-private:
-    Controller* next;
-    Controller* alternateNext;
-    activation_cb_t activationCallBack;
+    protected:
+        void gotoNext();
+        void gotoAlternateNext();
+        void gotoController(Controller *controller);
+
+    private:
+        Controller *next;
+        Controller *alternateNext;
+        activation_cb_t activationCallBack;
+    };
 
 };
 
