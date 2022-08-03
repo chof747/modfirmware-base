@@ -49,6 +49,12 @@ bool Application::registerController(Controller *controller, Controller *next, C
     return true;
 }
 
+void Application::startWith(Controller* controller)
+//****************************************************************************************
+{
+    activeController = controller;
+}
+
 void Application::setup()
 //****************************************************************************************
 {
@@ -64,6 +70,11 @@ void Application::loop()
     for (int i = 0; i < numcomponents; ++i)
     {
         components[i]->loop();
+    }
+
+    if (nullptr != activeController)
+    {
+        activeController->loop();
     }
 }
 

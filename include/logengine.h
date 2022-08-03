@@ -5,10 +5,12 @@
 
 namespace ModFirmWare
 {
+    class LogEngineStrategy;
 
     class LogEngine
     {
     public:
+
         enum levelType
         {
             NONE = 0,
@@ -18,11 +20,11 @@ namespace ModFirmWare
             DEBUG = 4
         };
 
-        static levelType MAINLOGLEVEL;
-        static LogEngine *getInstance();
-
+        static LogEngine* getInstance(int numLoggers = 1);
         LogEngine(LogEngine &other) = delete;
         void operator=(const LogEngine &) = delete;
+
+        int addStrategy(LogEngineStrategy* loggingStrategy);
 
         void info(const char *component, const char *message, ...)
         {
@@ -54,12 +56,14 @@ namespace ModFirmWare
         }
 
     protected:
-        levelType logLevel;
+        LogEngineStrategy** strategies;
+        int numLoggers;
         void log(levelType level, const char *component, const char *message, va_list args);
 
     private:
         static LogEngine *_instance;
-        LogEngine(levelType logLevel = levelType::NONE);
+
+        LogEngine(int numLoggers);
     };
 
 };

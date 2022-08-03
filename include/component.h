@@ -22,4 +22,4 @@ namespace ModFirmWare
 
 };
 
-#endif // COMPONENT_G
+#endif // COMPONENT_H

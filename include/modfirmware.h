@@ -17,6 +17,7 @@ namespace ModFirmWare
 
         uint8_t addComponent(Component *component);
         bool registerController(Controller *controller, Controller *next = NULL, Controller *alternateNext = NULL);
+        void startWith(Controller* controller);
 
         void setup();
         void loop();

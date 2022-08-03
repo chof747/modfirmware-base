@@ -1,46 +1,58 @@
 #include "logengine.h"
+#include "logengine/strategy.h"
 #include <Arduino.h>
 
 using namespace ModFirmWare;
 
 LogEngine* LogEngine::_instance = nullptr;
-LogEngine::levelType LogEngine::MAINLOGLEVEL = LogEngine::levelType::WARN;
 
-const char *LEVEL_LABELS[5] = { "NONE", "ERROR", "WARNING", "INFO", "DEBUG"};
-
-LogEngine* LogEngine::getInstance()
+LogEngine* LogEngine::getInstance(int numLoggers)
 //****************************************************************************************
 {
     if(nullptr == _instance)
     {
-        _instance = new LogEngine(MAINLOGLEVEL);
+        _instance = new LogEngine(numLoggers);
     }
 
     return _instance;
 }
 
-void LogEngine::log(levelType level, const char* component, const char* message, va_list args)
+int LogEngine::addStrategy(LogEngineStrategy* loggingStrategy)
 //****************************************************************************************
 {
-    if (levelType::NONE != this->logLevel)
-    {   
-        //Serial.printf("Log-level: %d, given: %d\n", this->logLevel, level);
-        if (this->logLevel >= level)
+    for (int i = 0; i < numLoggers; i++)
+    {
+        if (nullptr == strategies[i])
         {
-            char buffer[255];
-            vsnprintf(buffer,254,message, args);
-            Serial.printf("[%-7s][%-10s] %s\n", LEVEL_LABELS[level], component, buffer);
+            strategies[i] = loggingStrategy;
+            return i;
+        }
+    }
+
+    return -1;
+}
+
+
+void LogEngine::log(levelType level, const char *component, const char *message, va_list args)
+//****************************************************************************************
+{
+    for (int i = 0; i < numLoggers; i++)
+    {
+        if (nullptr != strategies[i])
+        {
+            strategies[i]->log(level,component,message,args);
         }
     }
 }
 
-LogEngine::LogEngine(levelType loglevel)
+LogEngine::LogEngine(int numLoggers)
 //****************************************************************************************
 {
-    this->logLevel = logLevel;
-    if (LogEngine::NONE != logLevel)
+    strategies = new LogEngineStrategy*[numLoggers];
+    for (int i = 0; i < numLoggers; i++)
     {
-        Serial.begin(115200); 
+        strategies[i] = 0;
     }
+      
+    this->numLoggers = numLoggers;
 }
-
