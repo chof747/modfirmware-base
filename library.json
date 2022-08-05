@@ -1,5 +1,9 @@
 {
     "name" : "ModFirmwareBase",
     "version" : "0.0.1",
-    "description" : "The basic components of a modular firmware"
+    "description" : "The basic components of a modular firmware",
+    "dependencies" : 
+    {
+        "Preferences" : "*"
+    }
 }

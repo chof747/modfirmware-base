@@ -4,7 +4,8 @@
 
 using namespace ModFirmWare;
 
-Application::Application(uint8_t numcomponents) : numcomponents(numcomponents)
+Application::Application(uint8_t numcomponents, const char* id) : 
+numcomponents(numcomponents), appId(id), configStore(ConfigStore(id))
 //****************************************************************************************
 {
     components = new Component *[numcomponents];
