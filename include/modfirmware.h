@@ -2,13 +2,13 @@
 #define MODFIRMWARE_HH
 
 #include <Arduino.h>
-#include "configstore.h"
 
 namespace ModFirmWare
 {
 
     class Controller;
     class Component;
+    class ConfigStore;
 
     class Application
     {
@@ -27,7 +27,7 @@ namespace ModFirmWare
         uint8_t numcomponents;
         const char *appId;
         Component **components;
-        ConfigStore configStore;
+        ConfigStore *configStore;
         Controller *activeController;
 
         void onActivateController(Controller *active);

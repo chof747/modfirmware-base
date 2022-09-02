@@ -2,9 +2,9 @@
 
 #include <Preferences.h>
 
-using namespace ModFirmWare;
-
 Preferences preferences;
+
+using namespace ModFirmWare;
 
 ConfigStore::ConfigStore(const char* prefNameSpace)
 //****************************************************************************************

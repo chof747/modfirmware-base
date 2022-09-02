@@ -9,7 +9,10 @@ namespace ModFirmWare
     {
         public:
 
-        ConfigStore(const char* prefNameSpace);
+        static ConfigStore* getInstance(const char* prefNameSpace);
+        ConfigStore(ConfigStore &other) = delete;
+        void operator=(const ConfigStore &) = delete;
+
         ConfigStore* set(const char* key, const char* value);
         ConfigStore* set(const char* key, const String value);
         ConfigStore* set(const char* key, bool flag);
@@ -24,6 +27,10 @@ namespace ModFirmWare
         double getPrecision(const char* key, double def = 0.0);
 
         ConfigStore* removeKey(const char* key);
+
+        private:
+        ConfigStore(const char* prefNameSpace);
+        static ConfigStore* _instance;
     };
 };
 

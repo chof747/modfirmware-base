@@ -1,11 +1,12 @@
 #include "modfirmware.h"
-#include "component.h"
+#include "modfw_component.h"
 #include "controller.h"
+#include "configstore.h"
 
 using namespace ModFirmWare;
 
 Application::Application(uint8_t numcomponents, const char* id) : 
-numcomponents(numcomponents), appId(id), configStore(ConfigStore(id))
+numcomponents(numcomponents), appId(id)
 //****************************************************************************************
 {
     components = new Component *[numcomponents];
@@ -19,6 +20,7 @@ Application::~Application()
 //****************************************************************************************
 {
     delete components;
+    delete configStore;
 }
 
 uint8_t Application::addComponent(Component *component)
@@ -62,6 +64,12 @@ void Application::setup()
     for (int i = 0; i < numcomponents; ++i)
     {
         components[i]->setup();
+    }
+    configStore = ConfigStore::getInstance(this->appId);
+
+    if (nullptr != activeController)
+    {
+        activeController->activate();
     }
 }
 
