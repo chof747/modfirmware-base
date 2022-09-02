@@ -1,4 +1,4 @@
-#include "component.h"
+#include "modfw_component.h"
 
 using namespace ModFirmWare;
 
