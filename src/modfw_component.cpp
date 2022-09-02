@@ -1,8 +1,9 @@
 #include "modfw_component.h"
+#include "modfirmware.h"
 
 using namespace ModFirmWare;
 
-bool Component::setup()
+bool Component::setup(Application* app)
 //******************************************************************************
 {
     logger = LogEngine::getInstance();

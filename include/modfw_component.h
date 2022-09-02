@@ -5,12 +5,13 @@
 
 namespace ModFirmWare
 {
+    class Application;
 
     class Component
     {
 
     public:
-        virtual bool setup();
+        virtual bool setup(Application*);
         virtual void afterSetup() {}
         virtual void loop() = 0;
 

@@ -63,7 +63,7 @@ void Application::setup()
 {
     for (int i = 0; i < numcomponents; ++i)
     {
-        components[i]->setup();
+        components[i]->setup(this);
     }
     configStore = ConfigStore::getInstance(this->appId);
 
