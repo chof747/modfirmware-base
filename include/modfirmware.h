@@ -8,7 +8,6 @@ namespace ModFirmWare
 
     class Controller;
     class Component;
-    class ConfigStore;
 
     class Application
     {
@@ -20,6 +19,11 @@ namespace ModFirmWare
         bool registerController(Controller *controller, Controller *next = NULL, Controller *alternateNext = NULL);
         void startWith(Controller *controller);
 
+        inline uint8_t countComponents() { return numcomponents; }
+        Component* operator[](uint8_t ix); 
+
+        void triggerConfigMode();
+
         void setup();
         void loop();
 
@@ -27,8 +31,9 @@ namespace ModFirmWare
         uint8_t numcomponents;
         const char *appId;
         Component **components;
-        ConfigStore *configStore;
         Controller *activeController;
+
+        bool inConfigMode;
 
         void onActivateController(Controller *active);
     };

@@ -4,9 +4,9 @@
             "name": "Mac",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/Users/chof/Documents/PlatformIO/devincludes/**",
                 "/Users/chof/.platformio/**",
-                "/Users/chof/Documents/PlatformIO/libraries/**"
+                "/Users/chof/Documents/PlatformIO/libraries/**",
+                "/Users/chof/Documents/PlatformIO/devincludes/**"
             ],
             "defines": [],
             "macFrameworkPath": [

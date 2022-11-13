@@ -1,12 +1,11 @@
 #include "modfirmware.h"
 #include "modfw_component.h"
 #include "controller.h"
-#include "configstore.h"
 
 using namespace ModFirmWare;
 
 Application::Application(uint8_t numcomponents, const char* id) : 
-numcomponents(numcomponents), appId(id)
+numcomponents(numcomponents), appId(id), inConfigMode(false)
 //****************************************************************************************
 {
     components = new Component *[numcomponents];
@@ -20,7 +19,6 @@ Application::~Application()
 //****************************************************************************************
 {
     delete components;
-    delete configStore;
 }
 
 uint8_t Application::addComponent(Component *component)
@@ -58,6 +56,25 @@ void Application::startWith(Controller* controller)
     activeController = controller;
 }
 
+Component* Application::operator[](uint8_t ix)
+//****************************************************************************************
+{
+    if (ix < numcomponents)
+    {
+        return components[ix];
+    }
+    else
+    {
+        return nullptr;
+    }
+}
+
+void Application::triggerConfigMode()
+//****************************************************************************************
+{
+    inConfigMode = true;
+}
+
 void Application::setup()
 //****************************************************************************************
 {
@@ -65,7 +82,11 @@ void Application::setup()
     {
         components[i]->setup(this);
     }
-    configStore = ConfigStore::getInstance(this->appId);
+
+    for (int i = 0; i < numcomponents; ++i)
+    {
+        components[i]->afterSetup();
+    }
 
     if (nullptr != activeController)
     {
