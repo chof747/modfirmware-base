@@ -4,36 +4,23 @@
 
 using namespace ModFirmWare;
 
-Application::Application(uint8_t numcomponents, const char* id) : 
-numcomponents(numcomponents), appId(id), inConfigMode(false)
+Application::Application(const char* id) : 
+components(), appId(id), inConfigMode(false)
 //****************************************************************************************
 {
-    components = new Component *[numcomponents];
-    for (int i = 0; i < numcomponents; ++i)
-    {
-        components[i] = NULL;
-    }
 }
 
 Application::~Application()
 //****************************************************************************************
 {
-    delete components;
+    components.clear();
 }
 
-uint8_t Application::addComponent(Component *component)
+size_t Application::addComponent(Component *component)
 //****************************************************************************************
 {
-    for (int i = 0; i < numcomponents; ++i)
-    {
-        if (NULL == components[i])
-        {
-            components[i] = component;
-            return i;
-        }
-    }
-
-    return numcomponents + 1;
+    components.push_back(component);
+    return components.size();
 }
 
 bool Application::registerController(Controller *controller, Controller *next, Controller *alternateNext)
@@ -56,10 +43,10 @@ void Application::startWith(Controller* controller)
     activeController = controller;
 }
 
-Component* Application::operator[](uint8_t ix)
+Component* Application::operator[](size_t ix)
 //****************************************************************************************
 {
-    if (ix < numcomponents)
+    if (ix < components.size())
     {
         return components[ix];
     }
@@ -78,12 +65,12 @@ void Application::triggerConfigMode()
 void Application::setup()
 //****************************************************************************************
 {
-    for (int i = 0; i < numcomponents; ++i)
+    for (size_t i = 0; i < components.size(); ++i)
     {
         components[i]->setup(this);
     }
 
-    for (int i = 0; i < numcomponents; ++i)
+    for (size_t i = 0; i < components.size(); ++i)
     {
         components[i]->afterSetup();
     }
@@ -97,7 +84,7 @@ void Application::setup()
 void Application::loop()
 //****************************************************************************************
 {
-    for (int i = 0; i < numcomponents; ++i)
+    for (size_t i = 0; i < components.size(); ++i)
     {
         components[i]->loop();
     }

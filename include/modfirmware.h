@@ -2,6 +2,7 @@
 #define MODFIRMWARE_HH
 
 #include <Arduino.h>
+#include <vector>
 
 namespace ModFirmWare
 {
@@ -12,15 +13,15 @@ namespace ModFirmWare
     class Application
     {
     public:
-        Application(uint8_t numcomponents, const char *id);
+        Application(const char *id);
         ~Application();
 
-        uint8_t addComponent(Component *component);
+        size_t addComponent(Component *component);
         bool registerController(Controller *controller, Controller *next = NULL, Controller *alternateNext = NULL);
         void startWith(Controller *controller);
 
-        inline uint8_t countComponents() { return numcomponents; }
-        Component* operator[](uint8_t ix); 
+        inline size_t countComponents() { return components.size(); }
+        Component* operator[](size_t ix); 
 
         void triggerConfigMode();
 
@@ -28,9 +29,8 @@ namespace ModFirmWare
         void loop();
 
     private:
-        uint8_t numcomponents;
         const char *appId;
-        Component **components;
+        std::vector<Component*> components;
         Controller *activeController;
 
         bool inConfigMode;
