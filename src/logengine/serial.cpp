@@ -5,11 +5,11 @@ using namespace ModFirmWare;
 
 const char *LEVEL_LABELS[5] = {"NONE", "ERROR", "WARNING", "INFO", "DEBUG"};
 
-LogEngineSerial::LogEngineSerial(LogEngine::levelType logLevel) : LogEngineStrategy(logLevel)
+LogEngineSerial::LogEngineSerial(LogEngine::levelType logLevel, int baud_rate) : LogEngineStrategy(logLevel)
 {
     if (LogEngine::NONE != logLevel)
     {
-        Serial.begin(115200);
+        Serial.begin(baud_rate);
     }
 }
 
