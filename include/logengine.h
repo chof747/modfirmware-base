@@ -2,6 +2,7 @@
 #define LOGENGINE_H
 
 #include <stdarg.h>
+#include <vector>
 
 namespace ModFirmWare
 {
@@ -20,11 +21,11 @@ namespace ModFirmWare
             DEBUG = 4
         };
 
-        static LogEngine* getInstance(int numLoggers = 1);
+        static LogEngine* getInstance();
         LogEngine(LogEngine &other) = delete;
         void operator=(const LogEngine &) = delete;
 
-        int addStrategy(LogEngineStrategy* loggingStrategy);
+        size_t addStrategy(LogEngineStrategy* loggingStrategy);
 
         void info(const char *component, const char *message, ...)
         {
@@ -56,14 +57,13 @@ namespace ModFirmWare
         }
 
     protected:
-        LogEngineStrategy** strategies;
-        int numLoggers;
+        std::vector<LogEngineStrategy*> strategies;
         void log(levelType level, const char *component, const char *message, va_list args);
 
     private:
         static LogEngine *_instance;
 
-        LogEngine(int numLoggers);
+        LogEngine();
     };
 
 };
