@@ -11,6 +11,7 @@ namespace ModFirmWare
     {
 
     public:
+        Component(): logger(LogEngine::getInstance()) {}
         virtual bool setup(Application*);
         virtual void afterSetup() {}
         virtual void loop() = 0;

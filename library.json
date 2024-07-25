@@ -1,10 +1,9 @@
 {
-    "name" : "ModFirmwareBase",
-    "version" : "0.0.1",
-    "description" : "The basic components of a modular firmware",
-    "platforms": 
-    [
-      "espressif8266",
-      "espressif32"
-    ]
+  "name": "ModFirmwareBase",
+  "version": "0.0.2",
+  "description": "The basic components of a modular firmware",
+  "platforms": [
+    "espressif8266",
+    "espressif32"
+  ]
 }

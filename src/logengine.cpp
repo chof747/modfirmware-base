@@ -21,6 +21,7 @@ size_t LogEngine::addStrategy(LogEngineStrategy *loggingStrategy)
 //****************************************************************************************
 {
     strategies.push_back(loggingStrategy);
+    loggingStrategy->initialize();
     return strategies.size();
 }
 
