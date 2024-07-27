@@ -1,13 +1,17 @@
 #include "modfirmware.h"
 #include "modfw_component.h"
 #include "controller.h"
+#include "logengine.h"
+
+#define LOGTAG "app"
 
 using namespace ModFirmWare;
 
 Application::Application(const char* id) : 
-components(), appId(id), inConfigMode(false)
+components(), appId(id), inConfigMode(false), deviceName()
 //****************************************************************************************
 {
+    logger = LogEngine::getInstance();
 }
 
 Application::~Application()
@@ -35,6 +39,13 @@ bool Application::registerController(Controller *controller, Controller *next, C
     controller->setAlternateNext(alternateNext);
 
     return true;
+}
+
+void Application::setDeviceName(const char* deviceName)
+//****************************************************************************************
+{
+  this->deviceName = deviceName;
+  logger->info(LOGTAG, "Device registered under name: %s", this->deviceName);
 }
 
 void Application::startWith(Controller* controller)
