@@ -67,4 +67,12 @@ namespace ModFirmWare
     };
 
 };
+
+#define MODFIRMWARE_LOG_LEVEL_DEBUG ModFirmWare::LogEngine::DEBUG
+#define MODFIRMWARE_LOG_LEVEL_INFO ModFirmWare::LogEngine::INFO
+#define MODFIRMWARE_LOG_LEVEL_WARN ModFirmWare::LogEngine::WARN
+#define MODFIRMWARE_LOG_LEVEL_ERROR ModFirmWare::LogEngine::ERROR
+#define MODFIRMWARE_LOG_LEVEL_NONE ModFirmWare::LogEngine::NONE
+
+
 #endif // LOGENGINE_H
