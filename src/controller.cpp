@@ -11,7 +11,7 @@ void Controller::setNext(Controller* c)
     this->next = c;
 }
 
-void Controller::setActivationCallback(activation_cb_t cb)
+void Controller::setActivationCallback(ActivationCallback cb)
 //****************************************************************************************
 {
     activationCallBack = cb;

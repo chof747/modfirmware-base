@@ -30,7 +30,7 @@ size_t Application::addComponent(Component *component)
 bool Application::registerController(Controller *controller, Controller *next, Controller *alternateNext)
 //****************************************************************************************
 {
-    activation_cb_t cb = std::bind(&Application::onActivateController,
+    Controller::ActivationCallback cb = std::bind(&Application::onActivateController,
                                    this,
                                    std::placeholders::_1);
 
