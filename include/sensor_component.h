@@ -19,7 +19,8 @@ namespace ModFirmWare
     SensorComponent(time_t updateInterval)
         : Component(), updateInterval(updateInterval), lastUpdate(0) {}
 
-    void loop() override;
+    virtual void loop() override final;
+    virtual bool measureContinuously() { return false; }
     virtual bool measure() = 0;
 
     void setUpdateInterval(time_t interval);
