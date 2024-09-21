@@ -20,8 +20,7 @@ namespace ModFirmWare
         : Component(), updateInterval(updateInterval), lastUpdate(0) {}
 
     virtual void loop() override final;
-    virtual bool measureContinuously() { return false; }
-    virtual bool measure() = 0;
+    void measureNow();
 
     void setUpdateInterval(time_t interval);
     inline const time_t getUpdateInterval() { return updateInterval; }
@@ -33,6 +32,9 @@ namespace ModFirmWare
     time_t lastUpdate;
 
     UpdateCallback onUpdate;
+
+    virtual bool measureContinuously() { return false; }
+    virtual bool measure() = 0;
   };
 };
 

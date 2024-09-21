@@ -19,12 +19,20 @@ void SensorComponent::loop()
     lastUpdate = now;
   }
 
-  if (changed)
+  if (changed && (NULL != onUpdate))
   {
     onUpdate(this);
   }
 }
 
+void SensorComponent::measureNow()
+//****************************************************************************************
+{
+  if ((measureContinuously() || measure()) && (NULL != onUpdate))
+  {
+    onUpdate(this);
+  }
+}
 void SensorComponent::setUpdateInterval(time_t interval)
 //****************************************************************************************
 {
