@@ -28,7 +28,10 @@ void SensorComponent::loop()
 void SensorComponent::measureNow()
 //****************************************************************************************
 {
-  if ((measureContinuously() || measure()) && (NULL != onUpdate))
+  bool changed = measureContinuously();
+  changed |= measure();
+  
+  if (changed && (NULL != onUpdate))
   {
     onUpdate(this);
   }
