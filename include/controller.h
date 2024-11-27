@@ -5,16 +5,15 @@
 
 namespace ModFirmWare
 {
-    class Controller;
-
+    class LogEngine;
     class Controller
     {
     public:
         using ActivationCallback = std::function<void(Controller *)>;
         Controller();
 
-        virtual void activate() = 0;
-        virtual void loop() = 0;
+        virtual void activate();
+        virtual void loop() = 0; // Making loop an abstract method
         virtual void deactivate() {}
 
         void setActivationCallback(ActivationCallback cb);
@@ -22,16 +21,19 @@ namespace ModFirmWare
         void setAlternateNext(Controller *c);
 
     protected:
-        void gotoNext();
-        void gotoAlternateNext();
-        void gotoController(Controller *controller);
-
-    private:
         Controller *next;
         Controller *alternateNext;
         ActivationCallback activationCallBack;
-    };
 
+        LogEngine *logger;
+
+
+        void gotoNext();
+        void gotoAlternateNext();
+
+    private:
+        void gotoController(Controller* controller);
+    };
 };
 
 #endif // CONTROLLER_H

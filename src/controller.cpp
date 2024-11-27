@@ -1,14 +1,22 @@
 #include "controller.h"
+#include "logengine.h"
 
 using namespace ModFirmWare;
 
-Controller::Controller(): 
-  next(NULL), alternateNext(NULL) {}
+// Controller Implementation
+Controller::Controller()
+    //****************************************************************************************
+    : next(nullptr), alternateNext(nullptr), activationCallBack(nullptr), logger(LogEngine::getInstance())
+{
+}
 
-void Controller::setNext(Controller* c)
+void Controller::activate()
 //****************************************************************************************
 {
-    this->next = c;
+    if (activationCallBack)
+    {
+        activationCallBack(this);
+    }
 }
 
 void Controller::setActivationCallback(ActivationCallback cb)
@@ -17,11 +25,16 @@ void Controller::setActivationCallback(ActivationCallback cb)
     activationCallBack = cb;
 }
 
-
-void Controller::setAlternateNext(Controller* c)
+void Controller::setNext(Controller *c)
 //****************************************************************************************
 {
-    this->alternateNext = c;
+    next = c;
+}
+
+void Controller::setAlternateNext(Controller *c)
+//****************************************************************************************
+{
+    alternateNext = c;
 }
 
 void Controller::gotoNext()
@@ -36,13 +49,16 @@ void Controller::gotoAlternateNext()
     gotoController(alternateNext);
 }
 
-void Controller::gotoController(Controller* controller)
+void Controller::gotoController(Controller *controller)
 //****************************************************************************************
 {
     if (NULL != controller)
     {
         this->deactivate();
         controller->activate();
-        activationCallBack(controller);
+        if (NULL != activationCallBack)
+        {
+            activationCallBack(controller);
+        }
     }
 }

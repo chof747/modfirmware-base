@@ -109,5 +109,9 @@ void Application::loop()
 void Application::onActivateController(Controller* active)
 //****************************************************************************************
 {
+    if (nullptr != activeController)
+    {
+        activeController->deactivate();
+    }
     activeController = active;
 }
