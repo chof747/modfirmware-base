@@ -9,6 +9,7 @@ namespace ModFirmWare
 
     class Controller;
     class Component;
+    class LogEngine;
 
     class Application
     {
@@ -23,6 +24,9 @@ namespace ModFirmWare
         inline size_t countComponents() { return components.size(); }
         Component* operator[](size_t ix); 
 
+        void setDeviceName(const char* deviceName); 
+        const char* getDeviceName() const { return deviceName.c_str(); } 
+
         void triggerConfigMode();
 
         void setup();
@@ -30,8 +34,10 @@ namespace ModFirmWare
 
     private:
         const char *appId;
+        String deviceName;
         std::vector<Component*> components;
         Controller *activeController;
+        LogEngine* logger;
 
         bool inConfigMode;
 

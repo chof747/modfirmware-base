@@ -6,6 +6,5 @@ using namespace ModFirmWare;
 bool Component::setup(Application* app)
 //******************************************************************************
 {
-    logger = LogEngine::getInstance();
     return true;
 }

@@ -1,27 +1,40 @@
 #include "controller.h"
+#include "logengine.h"
 
 using namespace ModFirmWare;
 
-Controller::Controller(): 
-  next(NULL), alternateNext(NULL) {}
-
-void Controller::setNext(Controller* c)
-//****************************************************************************************
+// Controller Implementation
+Controller::Controller()
+    //****************************************************************************************
+    : next(nullptr), alternateNext(nullptr), activationCallBack(nullptr), logger(LogEngine::getInstance())
 {
-    this->next = c;
 }
 
-void Controller::setActivationCallback(activation_cb_t cb)
+void Controller::activate()
+//****************************************************************************************
+{
+    if (activationCallBack)
+    {
+        activationCallBack(this);
+    }
+}
+
+void Controller::setActivationCallback(ActivationCallback cb)
 //****************************************************************************************
 {
     activationCallBack = cb;
 }
 
-
-void Controller::setAlternateNext(Controller* c)
+void Controller::setNext(Controller *c)
 //****************************************************************************************
 {
-    this->alternateNext = c;
+    next = c;
+}
+
+void Controller::setAlternateNext(Controller *c)
+//****************************************************************************************
+{
+    alternateNext = c;
 }
 
 void Controller::gotoNext()
@@ -36,13 +49,16 @@ void Controller::gotoAlternateNext()
     gotoController(alternateNext);
 }
 
-void Controller::gotoController(Controller* controller)
+void Controller::gotoController(Controller *controller)
 //****************************************************************************************
 {
     if (NULL != controller)
     {
         this->deactivate();
         controller->activate();
-        activationCallBack(controller);
+        if (NULL != activationCallBack)
+        {
+            activationCallBack(controller);
+        }
     }
 }

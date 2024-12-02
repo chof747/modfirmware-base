@@ -4,55 +4,40 @@
 
 using namespace ModFirmWare;
 
-LogEngine* LogEngine::_instance = nullptr;
+LogEngine *LogEngine::_instance = nullptr;
 
-LogEngine* LogEngine::getInstance(int numLoggers)
+LogEngine *LogEngine::getInstance()
 //****************************************************************************************
 {
-    if(nullptr == _instance)
+    if (nullptr == _instance)
     {
-        _instance = new LogEngine(numLoggers);
+        _instance = new LogEngine();
     }
 
     return _instance;
 }
 
-int LogEngine::addStrategy(LogEngineStrategy* loggingStrategy)
+size_t LogEngine::addStrategy(LogEngineStrategy *loggingStrategy)
 //****************************************************************************************
 {
-    for (int i = 0; i < numLoggers; i++)
-    {
-        if (nullptr == strategies[i])
-        {
-            strategies[i] = loggingStrategy;
-            return i;
-        }
-    }
-
-    return -1;
+    strategies.push_back(loggingStrategy);
+    loggingStrategy->initialize();
+    return strategies.size();
 }
-
 
 void LogEngine::log(levelType level, const char *component, const char *message, va_list args)
 //****************************************************************************************
 {
-    for (int i = 0; i < numLoggers; i++)
+    for (size_t i = 0; i < strategies.size(); i++)
     {
         if (nullptr != strategies[i])
         {
-            strategies[i]->log(level,component,message,args);
+            strategies[i]->log(level, component, message, args);
         }
     }
 }
 
-LogEngine::LogEngine(int numLoggers)
+LogEngine::LogEngine(): strategies()
 //****************************************************************************************
 {
-    strategies = new LogEngineStrategy*[numLoggers];
-    for (int i = 0; i < numLoggers; i++)
-    {
-        strategies[i] = 0;
-    }
-      
-    this->numLoggers = numLoggers;
 }

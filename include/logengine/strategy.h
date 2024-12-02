@@ -9,10 +9,13 @@ namespace ModFirmWare
     {
     public:
         LogEngineStrategy(LogEngine::levelType logLevel) : logLevel(logLevel) {}
-        virtual void log(LogEngine::levelType level, const char *component, const char *message, va_list args) = 0;
 
     protected:
+        virtual void initialize() = 0;
+        virtual void log(LogEngine::levelType level, const char *component, const char *message, va_list args) = 0;
         LogEngine::levelType logLevel;
+
+    friend LogEngine;
     };
 };
 
