@@ -17,19 +17,19 @@ namespace ModFirmWare
         virtual void deactivate() {}
 
         void setActivationCallback(ActivationCallback cb);
-        void setNext(Controller *c);
-        void setAlternateNext(Controller *c);
+        void setPrev(Controller *c);
+        void setAlternatePrev(Controller *c);
 
     protected:
-        Controller *next;
-        Controller *alternateNext;
+        Controller *prev;
+        Controller *alternatePrev;
         ActivationCallback activationCallBack;
 
         LogEngine *logger;
 
 
-        void gotoNext();
-        void gotoAlternateNext();
+        void gotoPrev();
+        void gotoAlternatePrev();
 
     private:
         void gotoController(Controller* controller);

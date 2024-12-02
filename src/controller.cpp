@@ -6,7 +6,7 @@ using namespace ModFirmWare;
 // Controller Implementation
 Controller::Controller()
     //****************************************************************************************
-    : next(nullptr), alternateNext(nullptr), activationCallBack(nullptr), logger(LogEngine::getInstance())
+    : prev(nullptr), alternatePrev(nullptr), activationCallBack(nullptr), logger(LogEngine::getInstance())
 {
 }
 
@@ -25,28 +25,28 @@ void Controller::setActivationCallback(ActivationCallback cb)
     activationCallBack = cb;
 }
 
-void Controller::setNext(Controller *c)
+void Controller::setPrev(Controller *c)
 //****************************************************************************************
 {
-    next = c;
+    prev = c;
 }
 
-void Controller::setAlternateNext(Controller *c)
+void Controller::setAlternatePrev(Controller *c)
 //****************************************************************************************
 {
-    alternateNext = c;
+    alternatePrev = c;
 }
 
-void Controller::gotoNext()
+void Controller::gotoPrev()
 //****************************************************************************************
 {
-    gotoController(next);
+    gotoController(prev);
 }
 
-void Controller::gotoAlternateNext()
+void Controller::gotoAlternatePrev()
 //****************************************************************************************
 {
-    gotoController(alternateNext);
+    gotoController(alternatePrev);
 }
 
 void Controller::gotoController(Controller *controller)

@@ -27,7 +27,7 @@ size_t Application::addComponent(Component *component)
     return components.size();
 }
 
-bool Application::registerController(Controller *controller, Controller *next, Controller *alternateNext)
+bool Application::registerController(Controller *controller, Controller *prev, Controller *alternatePrev)
 //****************************************************************************************
 {
     Controller::ActivationCallback cb = std::bind(&Application::onActivateController,
@@ -35,8 +35,8 @@ bool Application::registerController(Controller *controller, Controller *next, C
                                    std::placeholders::_1);
 
     controller->setActivationCallback(cb);
-    controller->setNext(next);
-    controller->setAlternateNext(alternateNext);
+    controller->setPrev(prev);
+    controller->setAlternatePrev(alternatePrev);
 
     return true;
 }

@@ -41,7 +41,7 @@ void IdleableController::checkAndExecuteIdling()
 
     if (keepIdle && (NULL != idleController))
     {
-      idleController->setNext(this);
+      idleController->setPrev(this);
       idleController->activate();
     }
   }

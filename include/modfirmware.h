@@ -18,7 +18,7 @@ namespace ModFirmWare
         ~Application();
 
         size_t addComponent(Component *component);
-        bool registerController(Controller *controller, Controller *next = NULL, Controller *alternateNext = NULL);
+        bool registerController(Controller *controller, Controller *prev = nullptr, Controller *alternatePrev = nullptr);
         void startWith(Controller *controller);
 
         inline size_t countComponents() { return components.size(); }
