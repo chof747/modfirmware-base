@@ -54,11 +54,6 @@ void Controller::gotoController(Controller *controller)
 {
     if (NULL != controller)
     {
-        this->deactivate();
         controller->activate();
-        if (NULL != activationCallBack)
-        {
-            activationCallBack(controller);
-        }
     }
 }

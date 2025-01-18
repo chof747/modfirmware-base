@@ -15,7 +15,6 @@ void SensorComponent::loop()
   {
     time_t now = millis();
     changed |= measure();
-    logger->debug(LOGTAG, "Measuring %s", (changed) ? "change" : "no new value");
     lastUpdate = now;
   }
 
