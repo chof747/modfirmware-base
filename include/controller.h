@@ -14,7 +14,7 @@ namespace ModFirmWare
 
         virtual void activate();
         virtual void loop() = 0; // Making loop an abstract method
-        virtual void deactivate() {}
+        virtual void deactivate();
 
         void setActivationCallback(ActivationCallback cb);
         void setPrev(Controller *c);
@@ -26,6 +26,7 @@ namespace ModFirmWare
         ActivationCallback activationCallBack;
 
         LogEngine *logger;
+        inline const bool isActive() const { return active; }
 
 
         void gotoPrev();
@@ -33,6 +34,7 @@ namespace ModFirmWare
 
     private:
         void gotoController(Controller* controller);
+        bool active;
     };
 };
 

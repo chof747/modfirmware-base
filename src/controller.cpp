@@ -6,7 +6,11 @@ using namespace ModFirmWare;
 // Controller Implementation
 Controller::Controller()
     //****************************************************************************************
-    : prev(nullptr), alternatePrev(nullptr), activationCallBack(nullptr), logger(LogEngine::getInstance())
+    : prev(nullptr),
+      alternatePrev(nullptr),
+      activationCallBack(nullptr),
+      active(false),
+      logger(LogEngine::getInstance())
 {
 }
 
@@ -17,6 +21,13 @@ void Controller::activate()
     {
         activationCallBack(this);
     }
+    active = true;
+}
+
+void Controller::deactivate()
+//****************************************************************************************
+{
+    active = false;
 }
 
 void Controller::setActivationCallback(ActivationCallback cb)
